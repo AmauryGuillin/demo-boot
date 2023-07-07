@@ -4,6 +4,11 @@ pipeline {
         environment {
         registry = "skyouuuh/demo-boot"
         registryCredential = 'docker-hub'
+        containerName = 'demo-app'
+        appPort = '8080'
+        testPort = '8180'
+        prodPort = '80'
+        prodIP = '13.38.217.69' // public ip of the production instance on AWS 
     }
 
     stages {
@@ -46,9 +51,9 @@ pipeline {
         
         stage('Deploy to test env') {
           steps{
-            sh "docker stop demo-app || true"
-            sh "docker rm demo-app || true"
-            sh "docker run -d -p8380:8080 --name demo-app $registry:$BUILD_NUMBER"
+            sh "docker stop $containerName || true"
+            sh "docker rm $containerNam || true"
+            sh "docker run -d -p $testPort:$appPort --name $containerNam $registry:$BUILD_NUMBER"
           }
         }
         
@@ -61,9 +66,9 @@ pipeline {
         
         stage('Deploy to prod env'){
           steps {
-        	sh "docker -H 13.38.217.69 stop demo-app || true"
-        	sh "docker -H 13.38.217.69 tm demo-app || true"
-        	sh "docker -H 13.38.217.69 run -d -p 80:8080 --name demo-app $registry:$BUILD_NUMBER"
+        	sh "docker -H $prodIP stop $containerNam || true"
+        	sh "docker -H $prodIP rm $containerNam || true"
+        	sh "docker -H $prodIP run -d -p $prodPort:$appPort --name $containerNam $registry:$BUILD_NUMBER"
         }
       }   
     }
