@@ -56,6 +56,7 @@ pipeline {
         	step {
         	input 'Do you approve deployment ?'
         	echo 'Going into production...'
+          }
         }        
     }
 }
