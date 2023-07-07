@@ -52,8 +52,8 @@ pipeline {
         stage('Deploy to test env') {
           steps{
             sh "docker stop $containerName || true"
-            sh "docker rm $containerNam || true"
-            sh "docker run -d -p $testPort:$appPort --name $containerNam $registry:$BUILD_NUMBER"
+            sh "docker rm $containerName || true"
+            sh "docker run -d -p $testPort:$appPort --name $containerName $registry:$BUILD_NUMBER"
           }
         }
         
@@ -66,16 +66,16 @@ pipeline {
         
         stage('Deploy to prod env'){
           steps {
-        	sh "docker -H $prodIP stop $containerNam || true"
-        	sh "docker -H $prodIP rm $containerNam || true"
-        	sh "docker -H $prodIP run -d -p $prodPort:$appPort --name $containerNam $registry:$BUILD_NUMBER"
+        	sh "docker -H $prodIP stop $containerName || true"
+        	sh "docker -H $prodIP rm $containerName || true"
+        	sh "docker -H $prodIP run -d -p $prodPort:$appPort --name $containerName $registry:$BUILD_NUMBER"
           }
         }
         
         stage('Clean test env'){
           steps {
-            sh "docker -H $prodIP stop $containerNam || true"
-        	sh "docker -H $prodIP rm $containerNam || true"
+            sh "docker -H $prodIP stop $containerName || true"
+        	sh "docker -H $prodIP rm $containerName || true"
         	sh "docker rmi $registry:$BUILD_NUMBER"
           }
         }
