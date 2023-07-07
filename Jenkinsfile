@@ -80,8 +80,8 @@ pipeline {
         
         stage('Clean test env'){
           steps {
-            sh "docker -H $prodIP stop $containerName || true"
-        	sh "docker -H $prodIP rm $containerName || true"
+            sh "docker stop $containerName || true"
+        	sh "docker rm $containerName || true"
         	sh "docker rmi $registry:$BUILD_NUMBER -f || true"
           }
         }
