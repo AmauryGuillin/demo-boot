@@ -8,7 +8,7 @@ pipeline {
         appPort = '8080'
         testPort = '8180'
         prodPort = '80'
-        prodIP = '13.37.244.113' // public ip of the production instance on AWS 
+        prodIP = '13.39.86.23' // public ip of the production instance on AWS 
     }
 
     stages {
