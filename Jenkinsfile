@@ -53,10 +53,18 @@ pipeline {
         }
         
         stage('Production env'){
-        	steps {
+          steps {
         	input 'Do you approve deployment ?'
         	echo 'Going into production...'
           }
-        }        
+        }     
+        
+        stage('Deploy to prod env'){
+          steps {
+        	sh "docker -H 172-31-41-206 stop demo-app || true"
+        	sh "docker -H 172-31-41-206 tm demo-app || true"
+        	sh "docker -H 172-31-41-206 run -d -p 80:8080 --name demo-app $registry:$BUILD_NUMBER"
+        }
+      }   
     }
 }
