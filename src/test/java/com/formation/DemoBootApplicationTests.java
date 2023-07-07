@@ -17,5 +17,15 @@ class DemoBootApplicationTests {
 		
 		assertEquals(6, calculator.sum(2, 4));
 	}
+	
+	@Test
+	void testMult() {
+		assertEquals(6, calculator.mult(2, 3));
+	}
+	
+	@Test
+	void testDiv() {
+		assertEquals(1, calculator.divide(2, 2));
+	}
 
 }
