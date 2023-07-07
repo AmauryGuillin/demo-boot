@@ -53,7 +53,7 @@ pipeline {
         }
         
         stage('Production env'){
-        	step {
+        	steps {
         	input 'Do you approve deployment ?'
         	echo 'Going into production...'
           }
