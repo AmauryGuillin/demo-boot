@@ -33,10 +33,17 @@ pipeline {
         }
         
         stage('SonarQube - SAST') {
-          steps {
-            sh "mvn clean verify sonar:sonar -Dsonar.projectKey=demo-boot -Dsonar.projectName='demo-boot' -Dsonar.host.url=http://192.168.33.10:9000 -Dsonar.token=sqp_d0c3c438293a33d169f6689db9ab42c9de24194e"
-          }
-        }
+		  steps {
+		    withSonarQubeEnv('SonarQube') {
+		       sh "mvn clean verify sonar:sonar -Dsonar.projectKey=demo-boot -Dsonar.projectName='demo-boot' -Dsonar.host.url=http://192.168.33.10:9000 -Dsonar.token=sqp_d0c3c438293a33d169f6689db9ab42c9de24194e"
+		     }
+		    timeout(time: 2, unit: 'MINUTES') {
+		      script {
+		        waitForQualityGate abortPipeline: true
+		      }
+		    }
+		  }
+		}
         
         stage('Docker Build and Push') {
           steps {
