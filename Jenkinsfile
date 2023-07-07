@@ -70,6 +70,14 @@ pipeline {
         	sh "docker -H $prodIP rm $containerNam || true"
         	sh "docker -H $prodIP run -d -p $prodPort:$appPort --name $containerNam $registry:$BUILD_NUMBER"
         }
+        
+        stage('Clean test env'){
+          steps {
+            sh "docker -H $prodIP stop $containerNam || true"
+        	sh "docker -H $prodIP rm $containerNam || true"
+        	sh "docker rmi $registry:$BUILD_NUMBER"
+          }
+        }
       }   
     }
 }
