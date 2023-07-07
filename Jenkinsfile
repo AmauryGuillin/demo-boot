@@ -61,9 +61,9 @@ pipeline {
         
         stage('Deploy to prod env'){
           steps {
-        	sh "docker -H 172-31-41-206 stop demo-app || true"
-        	sh "docker -H 172-31-41-206 tm demo-app || true"
-        	sh "docker -H 172-31-41-206 run -d -p 80:8080 --name demo-app $registry:$BUILD_NUMBER"
+        	sh "docker -H 13.38.217.69 stop demo-app || true"
+        	sh "docker -H 13.38.217.69 tm demo-app || true"
+        	sh "docker -H 13.38.217.69 run -d -p 80:8080 --name demo-app $registry:$BUILD_NUMBER"
         }
       }   
     }
